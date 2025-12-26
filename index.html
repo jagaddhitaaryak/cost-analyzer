@@ -117,9 +117,10 @@
                     <div>
                         <label class="block text-sm font-medium text-primary mb-1">Zona Pengiriman</label>
                         <select id="zoneSelect" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition bg-white cursor-pointer">
-                            <option value="INTERISLAND">INTERISLAND</option>
+                            <option value="JATIM">JABODETABEK</option>
                             <option value="JATENG">JATENG</option>
                             <option value="JATIM">JATIM</option>
+                            <option value="INTERISLAND">INTERISLAND</option>
                         </select>
                     </div>
                     <div>
@@ -159,6 +160,15 @@
         <div class="lg:col-span-2 flex flex-col gap-6">
             
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 fade-in mb-2">
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden border-t-4 border-rose-500 h-full">
+                    <div class="bg-rose-50 p-4 border-b border-rose-100 flex justify-between items-center">
+                        <h3 class="font-bold text-rose-800 text-lg uppercase tracking-wide">Top Jabodetabek (Avg Cost)</h3>
+                        <i class="fa-solid fa-city text-rose-400 text-xl"></i>
+                    </div>
+                    <div id="leaderboard-JABODETABEK" class="p-3 min-h-[220px] max-h-[350px] overflow-y-auto custom-scrollbar">
+                        <div class="text-sm text-center text-gray-400 py-10">Menunggu data...</div>
+                    </div>
+                </div>
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden border-t-4 border-orange-500 h-full">
                     <div class="bg-orange-50 p-4 border-b border-orange-100 flex justify-between items-center">
                         <h3 class="font-bold text-orange-800 text-lg uppercase tracking-wide">Top Jateng (Avg Cost)</h3>
@@ -247,11 +257,11 @@
                     <div class="flex flex-col gap-2">
                         <span class="text-xs font-bold text-gray-400 uppercase tracking-widest pl-1">Filter Zona Wilayah</span>
                         <div class="flex flex-wrap gap-2">
-                            <button onclick="setZone('ALL')" id="tab-ALL" class="tab-btn active px-5 py-2 rounded-full text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all flex-grow md:flex-grow-0 text-center shadow-sm">SEMUA</button>
-                            <button onclick="setZone('JATENG')" id="tab-JATENG" class="tab-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all flex-grow md:flex-grow-0 text-center shadow-sm">JATENG</button>
-                            <button onclick="setZone('JATIM')" id="tab-JATIM" class="tab-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all flex-grow md:flex-grow-0 text-center shadow-sm">JATIM</button>
-                            <button onclick="setZone('MEDAN')" id="tab-MEDAN" class="tab-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all flex-grow md:flex-grow-0 text-center shadow-sm">MEDAN</button>
-                            <button onclick="setZone('BATAM')" id="tab-BATAM" class="tab-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all flex-grow md:flex-grow-0 text-center shadow-sm">BATAM</button>
+                            <button onclick="setZone('ALL')" id="tab-ALL" class="tab-btn active ...">SEMUA</button>
+                            <button onclick="setZone('JATENG')" id="tab-JATENG" class="tab-btn ...">JATENG</button>
+                            <button onclick="setZone('JATIM')" id="tab-JATIM" class="tab-btn ...">JATIM</button>
+                            <button onclick="setZone('JABODETABEK')" id="tab-JABODETABEK" class="tab-btn px-5 py-2 rounded-full text-xs font-bold border border-gray-300 text-gray-600 hover:bg-gray-100 transition-all flex-grow md:flex-grow-0 text-center shadow-sm">JABODETABEK</button> <button onclick="setZone('MEDAN')" id="tab-MEDAN" class="tab-btn ...">MEDAN</button>
+                            <button onclick="setZone('BATAM')" id="tab-BATAM" class="tab-btn ...">BATAM</button>
                         </div>
                     </div>
 
@@ -383,8 +393,9 @@
         function normalizeZone(inputZone) {
             if(!inputZone) return 'INTERISLAND'; 
             const z = inputZone.toUpperCase().trim();
-            if(z.includes('JATENG') || z.includes('JAWA TENGAH') || z.includes('CENTRAL JAVA') || z.includes('SMG') || z.includes('SEMARANG')) return 'JATENG';
-            if(z.includes('JATIM') || z.includes('JAWA TIMUR') || z.includes('SBY') || z.includes('SURABAYA')) return 'JATIM';
+            if(z.includes('JATENG') || z.includes('JAWA TENGAH') || z.includes('SMG')) return 'JATENG';
+            if(z.includes('JATIM') || z.includes('JAWA TIMUR') || z.includes('SBY')) return 'JATIM';
+            if(z.includes('JABODETABEK') || z.includes('JAKARTA') || z.includes('BOGOR') || z.includes('TANGERANG') || z.includes('BEKASI')) return 'JABODETABEK'; // Tambahkan ini
             if(z.includes('INTER') || z.includes('MEDAN') || z.includes('BATAM')) return 'INTERISLAND';
             return z;
         }
@@ -394,6 +405,7 @@
             if(z === 'INTERISLAND') return "bg-blue-100 text-blue-800 border border-blue-200";
             if(z === 'JATENG') return "bg-orange-100 text-orange-800 border border-orange-200";
             if(z === 'JATIM') return "bg-purple-100 text-purple-800 border border-purple-200";
+            if(z === 'JABODETABEK') return "bg-rose-100 text-rose-800 border border-rose-200"; // Tambahkan ini
             return "bg-gray-100 text-gray-600 border border-gray-200";
         }
 
@@ -638,6 +650,7 @@
         function renderAllLeaderboards() {
             renderGenericCard('leaderboard-JATENG', 'text-orange-600', d => normalizeZone(d.zone) === 'JATENG');
             renderGenericCard('leaderboard-JATIM', 'text-purple-600', d => normalizeZone(d.zone) === 'JATIM');
+            renderGenericCard('leaderboard-JABODETABEK', 'text-rose-600', d => normalizeZone(d.zone) === 'JABODETABEK'); // Tambahkan ini
             renderGenericCard('leaderboard-MEDAN', 'text-blue-600', d => normalizeZone(d.zone) === 'INTERISLAND' && d.destination.toUpperCase().includes('MEDAN'));
             renderGenericCard('leaderboard-BATAM', 'text-teal-600', d => normalizeZone(d.zone) === 'INTERISLAND' && d.destination.toUpperCase().includes('BATAM'));
         }
